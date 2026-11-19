@@ -1,0 +1,62 @@
+{
+  "records": [
+    {
+      "title": "Example Topic: First Sample Announcement",
+      "url": "https://example.com/news/first-sample?utm_source=feed",
+      "source_name": "Example News",
+      "description": "A placeholder record about example topic used for offline testing.",
+      "relevance_score": 0.9,
+      "explanation": "Directly about example topic and mentions example region.",
+      "metadata": [
+        {"key": "published_date", "value": "2026-01-01"},
+        {"key": "location", "value": "Example Region"},
+        {"key": "category", "value": "announcement"}
+      ],
+      "additional_urls": ["https://example.org/mirror/first-sample"]
+    },
+    {
+      "title": "Second Sample Listing (remote)",
+      "url": "https://example.org/listings/42",
+      "source_name": "Example Listings",
+      "description": "Another placeholder record about example topic, available remote.",
+      "relevance_score": 0.65,
+      "explanation": "Related to example topic; remote.",
+      "metadata": [{"key": "category", "value": "listing"}],
+      "additional_urls": []
+    },
+    {
+      "title": "Example Topic: First Sample Announcement",
+      "url": "https://www.example.com/news/first-sample/",
+      "source_name": "Example News",
+      "description": "Duplicate of the first record reached via a different URL form.",
+      "relevance_score": 0.85,
+      "explanation": "Duplicate.",
+      "metadata": [],
+      "additional_urls": []
+    },
+    {
+      "title": "Unrelated archived page",
+      "url": "https://example.com/archive/old",
+      "source_name": "Example News",
+      "description": "An archived page that should be excluded by criteria.",
+      "relevance_score": 0.8,
+      "explanation": "Looks relevant but is archived.",
+      "metadata": [],
+      "additional_urls": []
+    },
+    {
+      "title": "Unsafe local link",
+      "url": "http://127.0.0.1/admin",
+      "source_name": "Nowhere",
+      "description": "Must be rejected by validation.",
+      "relevance_score": 1.0,
+      "explanation": "Invalid record.",
+      "metadata": [],
+      "additional_urls": []
+    }
+  ],
+  "sources_consulted": [
+    {"name": "Example News", "url": "https://example.com/news"}
+  ],
+  "notes": "Mock data for offline development."
+}

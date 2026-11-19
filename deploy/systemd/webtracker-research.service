@@ -1,0 +1,36 @@
+[Unit]
+Description=webtracker research run
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=webtracker
+Group=webtracker
+WorkingDirectory=/opt/webtracker
+EnvironmentFile=/etc/webtracker/webtracker.env
+# Secrets are delivered as systemd credentials (readable only by this service).
+LoadCredential=WT_TELEGRAM_BOT_TOKEN:/etc/webtracker/credentials/telegram_bot_token
+ExecStart=/opt/webtracker/.venv/bin/webtracker run --trigger timer
+# Exit code 75 = another run holds the lock (skipped, not an error).
+SuccessExitStatus=75
+TimeoutStartSec=45min
+Nice=5
+
+# Hardening (least privilege). Codex needs its own home for auth/state.
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/webtracker /home/webtracker/.codex
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

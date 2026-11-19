@@ -1,0 +1,64 @@
+# Example research configuration with neutral placeholder content.
+# Copy to config/research.yaml (git-ignored) and adapt it to your own topic.
+
+name: example-topic-tracker
+
+objective: >
+  Find recently published public web pages about EXAMPLE TOPIC that match the
+  criteria below. Each record should describe one distinct item (for example an
+  announcement, listing, article, or event) on its own page.
+
+search_queries:
+  - "example topic latest announcements"
+  - "example topic new listings"
+
+sources:
+  seed_sources:
+    - "https://example.com/news"
+    - "https://example.org/listings"
+  allow_discovery: true          # the agent may find additional public sources
+  blocked_domains:
+    - "example.net"
+
+criteria:
+  - name: topic_match
+    description: The item is clearly about EXAMPLE TOPIC.
+    weight: 3
+    include_keywords: ["example topic"]
+    required: false
+  - name: location
+    description: The item is relevant to EXAMPLE REGION or is location-independent.
+    weight: 1
+    include_keywords: ["example region", "remote"]
+  - name: exclusions
+    description: Ignore items that are expired, archived or unrelated advertising.
+    weight: 1
+    exclude_keywords: ["expired", "archived"]
+
+metadata_fields:
+  - key: published_date
+    description: Publication or posting date (ISO 8601 if possible)
+  - key: location
+    description: Geographic location mentioned by the item, if any
+  - key: category
+    description: Short category label for the item
+
+# Status names used for tracking records (must include "new" and "dismissed").
+statuses: [new, viewed, saved, in_progress, done, dismissed]
+
+scoring:
+  agent_weight: 0.7         # share of the final score taken from the agent's relevance score
+  notify_min_score: 0.6     # notify for records scoring at least this
+  store_min_score: 0.0      # discard records scoring below this
+
+limits:
+  max_records_per_run: 25
+  max_notifications_per_run: 10
+  existing_records_in_prompt: 100
+
+browser:
+  enabled: false            # optional Playwright MCP server for public-page navigation (needs Node.js)
+
+language: English
+# prompt_template: prompts/research_task.md   # optional override of the built-in task template
+extra_instructions: ""
